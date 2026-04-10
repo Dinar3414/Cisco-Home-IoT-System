@@ -1,0 +1,138 @@
+switch which connect with 
+server via fa0/1,
+Front switch via fa0/3
+garage switch via fa0/7
+kitchen switch via fa0/6
+bedroom switch via fa0/5
+living room switch via fa0/4
+via access smart phone switch fa0/2
+main router via Gig0/1
+
+
+#Main Switch CLI
+
+(
+enable
+configure terminal
+
+vlan 10
+ name FRONT
+vlan 20
+ name LIVING
+vlan 30
+ name BEDROOM
+vlan 40
+ name KITCHEN
+vlan 50
+ name GARAGE
+vlan 60
+ name SMARTPHONE
+vlan 99
+ name SERVER
+
+exit
+
+
+#Access Port server
+
+interface fa0/1
+ switchport mode access
+ switchport access vlan 99
+ spanning-tree portfast
+ exit
+
+
+#Switch to switch Trunk
+
+interface range fa0/2 - 7
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20,30,40,50,60,99
+ exit
+
+#Router Up Link
+interface gig0/1
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20,30,40,50,60,99
+ exit
+
+
+#save
+
+end
+write memory
+
+)
+
+
+
+#bed room switch config
+
+enable
+conf t
+
+interface fa0/2
+ switchport mode trunk
+ exit
+
+interface range fa0/2 - 24
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ exit
+
+end
+write memory
+
+
+#living room
+
+
+
+
+
+#Router Config
+
+enable
+conf t
+
+interface gig0/0/1
+ no shutdown
+ exit
+
+
+
+
+interface gig0/0/1.10
+ encapsulation dot1Q 10
+ ip address 10.10.10.1 255.255.255.0
+
+interface gig0/0/1.20
+ encapsulation dot1Q 20
+ ip address 10.20.20.1 255.255.255.0
+
+interface gig0/0/1.30
+ encapsulation dot1Q 30
+ ip address 10.30.30.1 255.255.255.0
+
+interface gig0/0/1.40
+ encapsulation dot1Q 40
+ ip address 10.40.40.1 255.255.255.0
+
+interface gig0/0/1.50
+ encapsulation dot1Q 50
+ ip address 10.50.50.1 255.255.255.0
+
+interface gig0/0/1.60
+ encapsulation dot1Q 60
+ ip address 10.60.60.1 255.255.255.0
+
+interface gig0/0/1.99
+ encapsulation dot1Q 99
+ ip address 10.99.99.1 255.255.255.0
+
+exit
+
+
+end
+write memory
+

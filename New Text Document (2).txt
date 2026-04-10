@@ -1,0 +1,86 @@
+Router -0
+
+en
+conf t
+int gig0/0/0
+ip address 10.10.10.0 255.0.0.0
+no shut
+exit
+
+int gig0/1/0
+ip address 50.50.50.1 255.0.0.0
+no shut
+exit
+
+int gig0/0/1
+ip address 40.40.40.1 255.0.0.0
+no shut
+exit
+
+router rip
+network 10.0.0.0
+network 50.0.0.0
+network 40.0.0.0
+end
+
+save
+wr
+
+
+Router -1
+
+en
+conf t
+int gig0/0/0
+ip address 20.20.20.0 255.0.0.0
+no shut
+exit
+
+int gig0/1/0
+ip address 60.60.60.2 255.0.0.0
+no shut
+exit
+
+int gig0/0/1
+ip address 40.40.40.2 255.0.0.0
+no shut
+exit
+
+router rip
+network 20.0.0.0
+network 60.0.0.0
+network 40.0.0.0
+end
+
+save
+wr
+
+
+
+Router -2
+
+en
+conf t
+int gig0/0/0
+ip address 30.30.30.0 255.0.0.0
+no shut
+exit
+
+int gig0/1/0
+ip address 50.50.50.2 255.0.0.0
+no shut
+exit
+
+int gig0/0/1 
+ip address 60.60.60.1 255.0.0.0
+no shut
+exit
+
+router rip
+network 30.0.0.0
+network 60.0.0.0
+network 50.0.0.0
+end
+
+save
+wr
